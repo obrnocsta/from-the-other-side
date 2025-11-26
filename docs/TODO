@@ -1,0 +1,17 @@
+# Routes & Paths
+
+## Intro (new)
+
+**Our three main tasks:**
+- Server assets
+- Provide data via an API
+- Add user input to our data
+
+**Extra:**
+- A section on events
+
+**We will be studying:**
+- The 'fs' module
+  - reading/writing files
+- The 'path' module
+  - create file/directory paths
