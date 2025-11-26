@@ -15,3 +15,42 @@
   - reading/writing files
 - The 'path' module
   - create file/directory paths
+
+## Setting up the project
+
+**Challenge:**
+
+```bash
+# 1. 
+#   Initialise a nodejs project:
+#   Name: “from-the-other-side”.
+#   Description: “A platform for sharing ghostly encounters”.
+# 2.
+#   Enable modular js (in package.json).
+```
+
+**Hint for help:**
+
+```bash
+# In terminal:
+npm init
+
+# In package.json: 
+"type": "module"
+```
+
+**Challenge:**
+
+````bash
+# 1.
+#   Set up a server that serves the string 
+#   '<html><h1>The server is working</h1></html>'.
+#   What should the content type be? 
+#   What status code should you send?
+
+# 2. 
+#   Listen on port 8000 and log a connection message to the console.
+
+# 3. 
+#   Open the browser to see your first served HTML.
+```
