@@ -3,14 +3,17 @@
 ## Intro (new)
 
 **Our three main tasks:**
+
 - Server assets
 - Provide data via an API
 - Add user input to our data
 
 **Extra:**
+
 - A section on events
 
 **We will be studying:**
+
 - The 'fs' module
   - reading/writing files
 - The 'path' module
@@ -41,7 +44,7 @@ npm init
 
 **Challenge:**
 
-````bash
+```bash
 # 1.
 #   Set up a server that serves the string 
 #   '<html><h1>The server is working</h1></html>'.
@@ -53,4 +56,43 @@ npm init
 
 # 3. 
 #   Open the browser to see your first served HTML.
+```
+
+## Rounting and serving data
+
+- Identify what `resources` the client wants.
+- Identify the `path` to that resources:
+  - The current module's directory.
+  - The path to the resource from that directory.
+- Read the resources we want to serve using `fs module`.
+- Send those resources to the client.
+
+**Important:** We need to be OS agnostic!
+
+**import-meta**: 
+
+- Is an object specific to the modular JS enviroment, which provides metadata about the current module.
+
+**Hint:**
+
+```js
+const __dirname = import.meta.dirname
+```
+
+## Aside: Path Module
+
+**Relative paths created with Path Module:**
+
+- Start from the `Current Working Directory` - CWD.
+- Are therefore affected by changes to the CWD.
+- That means they are not as safe, but sometimes more flexible.
+
+**Hint:**
+
+```js
+// server.js
+import path from 'node:path'
+const __dirname = import.meta.dirname
+// inside server callback function
+const pathFile = path.join(__dirname, 'public', 'index.html')
 ```
