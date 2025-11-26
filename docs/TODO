@@ -96,3 +96,20 @@ const __dirname = import.meta.dirname
 // inside server callback function
 const pathFile = path.join(__dirname, 'public', 'index.html')
 ```
+
+## Get Path to Resource
+
+**Challenge:**
+
+```bash
+# 1. 
+#   Get the name of the directory holding this server.js file and store it to a const ‘__dirname’.
+# 2.
+#   Create and export a function called 'serveStatic'. 
+#   It should take in the base directory as a parameter.
+#   Build a path to index.html in the 'public' folder and save it to a const 'filePath'. 
+#   (Which node module will you need to import to do this? Which method joins the path together?)
+#   Log 'filePath' to the console.
+# 3.
+#   Import and call serveStatic and pass it the directory of this current module.
+```
