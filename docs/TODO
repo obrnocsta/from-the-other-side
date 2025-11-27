@@ -218,3 +218,17 @@ export const getContentType = (ext) => {
 
 #   The Content-Type for the 500 can be ‘text/html’.
 ```
+
+## Getting the JSON Data
+
+**Challenge:**
+
+```bash
+# 1. 
+#   getData() should: 
+#     - read the json in json.data as a string 
+#     - parse it to JS 
+#     - return the parsed data. 
+
+#   If there’s an error, it should return an empty array (think, why are we doing this?).
+```
