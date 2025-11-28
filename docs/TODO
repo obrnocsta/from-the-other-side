@@ -434,3 +434,61 @@ for (const [key, value] of Object.entries(data)) {
   }
 }
 ```
+
+## Add Event Emitter
+
+**Event-Driver Architecture**
+
+Events: 
+- An event signals that something happened:
+  - A user clicks a button
+  - A file finishes downloading
+  - A network request is received
+  - And many more
+
+**The Event Emitter from Node's events module**
+
+**Challenge:**
+
+```bash
+# 1. Create and export a new instance of EventEmitter called ‘sightingEvents’.
+# 2. Register the listener function when an event called ‘sighting-added’ is detected. 
+```
+
+**Challenge:**
+
+```bash
+# 1. At the top of this file, import the event emitter you have created.
+# 2. Use it to emit a ‘sighting-added’ event. 
+#    What information does the listener function need?
+# 3. Add a sighting to test!
+```
+
+**Hint:**
+
+```js
+// import EventEmitter
+import { EventEmitter } from 'node:events'
+
+const customerDetails = {
+  fullName: 'Meryl Sheep',
+  email: 'baah@thedevilwearswool.com',
+  phone: 12345678910
+}
+
+// create the emitter
+const emailRequestEmitter = new EventEmitter()
+
+// define the listener function
+function generateEmail(customer) {
+  console.log(`Email generated for ${customer.email}`)
+}
+
+// register the listener
+emailRequestEmitter.on('emailRequest', generateEmail)
+
+// emit the event
+setTimeout(()=> {
+  emailRequestEmitter.emit('emailRequest', customerDetails)
+}, 2000)
+```
