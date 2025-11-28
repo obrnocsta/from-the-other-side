@@ -492,3 +492,53 @@ setTimeout(()=> {
   emailRequestEmitter.emit('emailRequest', customerDetails)
 }, 2000)
 ```
+
+## Server-Sent Events
+
+**Provide a constant stream of data to a client:**
+- Breacking news
+- Stock price tickers
+- Sports scores
+- Real-time monitoring
+
+**Data flows only one way, so not suitable for:**
+- Chat apps
+- Doorbell cams
+- anything where two-way communitation is needed
+
+**Challenge:**
+
+```bash
+# 1. Set Content-Type, Cache-Control, and Connection headers
+```
+
+**Challenge:**
+
+```bash
+# 1. Use res.write() to send an object to the frontend. 
+#    The object should include:
+#    - an event property with a descriptive name.
+#    - a story chosen at random from the stories array.
+#    Remember, the object is contained in a string which starts with 'data: '. 
+#    What do you need at the end of the string to signal the end of a message block?
+```
+
+## Outro
+
+**We studied:**
+
+- The `fs` module
+  - reading/writing file
+- The `path` module
+  - create file/directory paths
+- Serving static assets
+- Dependencies
+- Sanitizing input
+
+**Stretch Goals:**
+
+- Error Handling 
+  - A client requests '/api/xyz'
+  - A client request '/api' but uses a method which is not 'GET' or 'POST'
+- Add 'uuids' to incoming data
+  - Use a dependency to generate the 'uuid'
