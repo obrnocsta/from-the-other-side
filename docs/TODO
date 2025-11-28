@@ -257,3 +257,26 @@ export const getContentType = (ext) => {
    
 # Open the browser and load the sightings page to see if it works.
 ```
+
+## Explainer: Adding POST
+
+**challenge:**
+
+````bash
+# 1. 
+#   Add a route for a POST request to '/api'.
+# 2. 
+#   When a request comes in, pass the req and res to handlePost().
+```
+
+```bash
+# parseJSONBody() will collect and parse the incoming JSON
+# santizeData() 
+# addNewSighting() will do the donkey work of adding the data to our dataset
+# sendResponse()
+
+# 1. 
+# Create and export a function called handlePost().
+# 2. 
+# For now, that function can just log 'POST request received'.
+```
