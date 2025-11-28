@@ -1,5 +1,6 @@
-import { getData } from "../utils/getData.js"
-import { sendResponse } from "../utils/sendResponse.js"
+import { getData } from '../utils/getData.js'
+import { sendResponse } from '../utils/sendResponse.js'
+import { parseJSONBody } from '../utils/parseJSONBody.js'
 
 export const handleGet = async (res, dirname) => {
   let data = await getData(dirname)
@@ -8,21 +9,5 @@ export const handleGet = async (res, dirname) => {
 }
 
 export const handlePost = async (req, res) => {
-
-  const buffers = []
-  for await (const chunk of req) {
-    buffers.push(chunk)
-  }
-
-  const data = Buffer.concat(buffers).toString()
-
-  let body = []
-  try {
-    body = JSON.parse(data)
-  } catch (error) {
-    body = data
-    console.log(error)
-  }
-
-  console.log(body)
+  const parsedBody = await parseJSONBody(req)
 }
