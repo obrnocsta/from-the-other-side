@@ -377,3 +377,60 @@ try {
   console.error('Error writing files:', err);
 }
 ```
+
+## Aside: Sanitization
+
+**XSS - Crossing-Site Scripting:**
+
+An XSS attack is a security vulnerability that allows an attacker to inject malicious scripts into web pages.
+
+Sanitization is removing anything suspicious from incoming input. In this case, we will be removing any tags from user-uploaded text.
+
+**Hint:**
+```js
+import sanitizeHtml from 'sanitize-html'
+console.log(
+  sanitizeHtml('h1: <h1>I am in an h1 tag</h1>',  
+    {allowedTags: ['h1'], allowedAttributes: {}}
+  )
+)
+```
+
+## Sanitize Input
+
+**Challenge:**
+
+```bash
+# 1. Sanitize the incoming data. 
+#    Allow only the <b> tag and no attributes.
+# 2. Test it with the code in story.md.
+```
+
+**Hint:**
+
+```bash
+# Bring in the sanitize-html dependency
+# Set up a utility function to sanitize incoming data.
+# Our incoming data is an object.
+# Iterate over that object and sanitize any strings. Remember to allow the '<b>' tag.
+# One way to iterate over an object:
+#   for (const [key, value] of Object.entries(objName)) {
+#    // do something here
+#   }
+# Our function should return the sanitized data.
+# Probably best to call this function in handlePost()
+```
+
+```js
+const sanitizedData = {}
+for (const [key, value] of Object.entries(data)) {
+  if (typeof value === 'string') {
+    sanitizedData[key] = sanitizeHtml(value, {
+      allowedTags: ['b'],
+      allowedAttributes: {}
+    })
+  } else {
+    sanitizedData[key] = value
+  }
+}
+```
