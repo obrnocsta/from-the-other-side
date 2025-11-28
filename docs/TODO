@@ -262,7 +262,7 @@ export const getContentType = (ext) => {
 
 **challenge:**
 
-````bash
+```bash
 # 1. 
 #   Add a route for a POST request to '/api'.
 # 2. 
@@ -279,4 +279,43 @@ export const getContentType = (ext) => {
 # Create and export a function called handlePost().
 # 2. 
 # For now, that function can just log 'POST request received'.
+```
+
+## parseJSON Body
+
+**Challenge:**
+
+```bash
+# 1. Create a function parseJSONBody which:
+#   - gathers the incoming chunks into a string 'body'.
+#   - parses 'body'
+#   - returns 'body'
+#   - throws an error if 'body' can't be parsed:
+#     - `Invalid JSON format: ${err}`
+```
+
+```bash
+# 1. Create a const 'rawBody' to store whatever is returned by parseJSONBody()
+# 2. For now, log 'rawBody'.
+# 3. Input an entry on the front end to test.
+```
+
+**Hint:**
+
+```js
+let body = []
+for await (const chunk of req) {
+  body.push(chunk)
+}
+
+try {
+  const emailObj = JSON.parse(body)
+  console.log(emailObj)
+  res.statusCode = 201
+  res.setHeader('Content-Type', 'application/json')
+  res.end(JSON.stringify(emailObj))
+}
+catch (err) {
+  console.log('Invalid JSON, ', err)
+}
 ```
