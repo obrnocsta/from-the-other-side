@@ -50,10 +50,57 @@ Criar um servidor HTTP do zero, **apenas com o módulo http nativo do Node.js**,
 
 ## Tecnologias
 
+- Node.js >= 18 (módulos nativos: `http`, `fs/promises`, `path`, `events`, `crypto`)
+- Dependência: `sanitize-html` (para proteção contra XSS)
+- Dados persistidos no arquivo JSON (sem banco de dados)
+- ES Modules (`"type": "module"`)
+
 ## Como executar
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/obrnocsta/from-the-other-side.git
+# 2. Entre na pasta
+cd from-the-other-side
+# 3. Instale as dependências
+npm install
+# 4. Inicie o servidor
+npm start
+```
+
+Servidor rodará em **http://localhost:8000**
 
 ## Exemplo
 
+```bash
+# Lista todos os avistamentos
+curl http://localhost:8000/api
+
+# Adiciona novo avistamento
+curl -X POST http://localhost:8000/api \ 
+  -H "Content-Type: application/json" \ 
+  -d '{"title":"The Widow in the Rocking Chair","story":"The hotel was ancient...","location":"São Paulo, Brazil"}'
+```
+
+```js
+// Stream SSE (mensagem exibida via console.log)
+
+// sightingEvents.js
+import { EventEmitter } from 'node:events'
+import { createAlert } from '../utils/createAlert.js'
+export const sightingEvents = new EventEmitter()
+sightingEvents.on('sighting-added', createAlert)
+
+// createAlert.js
+export const createAlert = (sighting) => {
+  console.log(`Send alert to Ghost Hunters in ${sighting.location}`)
+}
+```
+
 ## Erros
+
+- `404` → Rota ou arquivo não encontrado (serve `404.html`)  
+- `500` → Erro interno (ex: falha no `fs`, retorna `HTML` com código de erro)  
+- `400` → `JSON` inválido no `POST` (com mensagem de erro sanitizada)  
 
 Feito com ☕ por [Bruno Costa](https://github.com/obrnocsta) – Pronto para produção (ou quase!).
