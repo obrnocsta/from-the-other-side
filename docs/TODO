@@ -1,0 +1,544 @@
+# Routes & Paths
+
+## Intro (new)
+
+**Our three main tasks:**
+
+- Server assets
+- Provide data via an API
+- Add user input to our data
+
+**Extra:**
+
+- A section on events
+
+**We will be studying:**
+
+- The 'fs' module
+  - reading/writing files
+- The 'path' module
+  - create file/directory paths
+
+## Setting up the project
+
+**Challenge:**
+
+```bash
+# 1. 
+#   Initialise a nodejs project:
+#   Name: “from-the-other-side”.
+#   Description: “A platform for sharing ghostly encounters”.
+# 2.
+#   Enable modular js (in package.json).
+```
+
+**Hint for help:**
+
+```bash
+# In terminal:
+npm init
+
+# In package.json: 
+"type": "module"
+```
+
+**Challenge:**
+
+```bash
+# 1.
+#   Set up a server that serves the string 
+#   '<html><h1>The server is working</h1></html>'.
+#   What should the content type be? 
+#   What status code should you send?
+
+# 2. 
+#   Listen on port 8000 and log a connection message to the console.
+
+# 3. 
+#   Open the browser to see your first served HTML.
+```
+
+## Rounting and serving data
+
+- Identify what `resources` the client wants.
+- Identify the `path` to that resources:
+  - The current module's directory.
+  - The path to the resource from that directory.
+- Read the resources we want to serve using `fs module`.
+- Send those resources to the client.
+
+**Important:** We need to be OS agnostic!
+
+**import-meta**: 
+
+- Is an object specific to the modular JS enviroment, which provides metadata about the current module.
+
+**Hint:**
+
+```js
+const __dirname = import.meta.dirname
+```
+
+## Aside: Path Module
+
+**Relative paths created with Path Module:**
+
+- Start from the `Current Working Directory` - CWD.
+- Are therefore affected by changes to the CWD.
+- That means they are not as safe, but sometimes more flexible.
+
+**Hint:**
+
+```js
+// server.js
+import path from 'node:path'
+const __dirname = import.meta.dirname
+// inside server callback function
+const pathFile = path.join(__dirname, 'public', 'index.html')
+```
+
+## Get Path to Resource
+
+**Challenge:**
+
+```bash
+# 1. 
+#   Get the name of the directory holding this server.js file and store it to a const ‘__dirname’.
+# 2.
+#   Create and export a function called 'serveStatic'. 
+#   It should take in the base directory as a parameter.
+#   Build a path to index.html in the 'public' folder and save it to a const 'filePath'. 
+#   (Which node module will you need to import to do this? Which method joins the path together?)
+#   Log 'filePath' to the console.
+# 3.
+#   Import and call serveStatic and pass it the directory of this current module.
+```
+
+## Aside: FS Module
+
+**FS Module uses:**
+
+- Read files `readFile()`
+- Create files `writeFile()`
+- Update files `appendFIle()`
+- Delete files `unlink()`
+- Rename files `rename()`
+
+```js
+// server.js
+import fs from 'node:fs/promises'
+// inside server callback function
+const content = await fs.readFile(pathFile)
+```
+
+## Server index.html
+
+**Challenge:**
+
+```js
+// 1.
+//   Store index.html as a buffer in a const ‘content’. 
+//   As this is an async process, do this inside a try/catch block.
+//   For now, just log the error in the catch block.
+//   You will need to change something to do with the function declaration. What is it?
+
+// 2.
+//   Create and export a function called sendResponse().  
+//   What 4 things should this function take in as parameters?
+
+// 3.
+//   Import sendResponse() and use it to serve index.html. 
+//   Pass in all of the information sendResponse() is expecting.
+//   serveStatic() will need another param. What is it?
+
+//   Make any changes necessary in server.js and delete any unneeded code.
+```
+
+## Server the frontend
+
+**Challenge:**
+
+```bash
+# 1. 
+#   Write code below to serve files from our public directory.
+#   Don’t worry about handling errors for now.
+#   hint.md for help!
+```
+
+```js
+// serveStatic.js
+const publicDir = path.join(__dirname, 'public')
+const pathResource = path.join(
+  publicDir,
+  req.url === '/' ? 'index.html' : req.url
+)
+// ...
+const ext = path.extname(pathResource)
+const contentType = getContentType(ext)
+// ...
+res.setHeader('Content-Type', contentType)
+```
+
+**Hint:**
+
+```bash
+# 2. 
+#   To keep things neat, create a path to the 'public' folder.
+#   Use a ternary to get the path to the file to serve (remember, a request to '/' is a request for index.html).
+#   Get the extension from path's extname() method.
+#   Use the extension to get the Content-Type from getContentType().
+#   Pass sendResponse() the correct content-contentType.
+#   Test.
+```
+
+```js
+// getContentType.js
+export const getContentType = (ext) => {
+  const type = {
+    '.js': 'text/javascript',
+    '.css': 'text/css',
+    '.json': 'application/json',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml'
+  }
+  return types[ext.toLowerCase()] || 'text/html'
+}
+```
+
+**Challenge:**
+
+```bash
+# 3.
+#   If the error code is “ENOENT”, serve the 404.html page.  
+#   If there’s another error, serve a 500 with this string: 
+#   `<html><h1>Server Error: ${err.code}</h1></html>`. 
+
+#   The Content-Type for the 500 can be ‘text/html’.
+```
+
+## Getting the JSON Data
+
+**Challenge:**
+
+```bash
+# 1. 
+#   getData() should: 
+#     - read the json in json.data as a string 
+#     - parse it to JS 
+#     - return the parsed data. 
+
+#   If there’s an error, it should return an empty array (think, why are we doing this?).
+```
+
+## Wire up the API
+
+**Challenge:**
+
+```bash
+# 1. 
+#   Set up a route for ‘/api’.
+# 2. 
+#   Nest an if to check if the method is ‘GET’. 
+# 3. 
+#   When a GET request is received to '/api', use handleGet() to handle it.
+```
+
+```bash
+# 1. 
+#   Export a function called handleGet(). 
+# 2. 
+#   It should:
+#   - use getData() to get the data
+#   - stringify that data
+#   - use sendResponse() to serve it
+   
+# Open the browser and load the sightings page to see if it works.
+```
+
+## Explainer: Adding POST
+
+**challenge:**
+
+```bash
+# 1. 
+#   Add a route for a POST request to '/api'.
+# 2. 
+#   When a request comes in, pass the req and res to handlePost().
+```
+
+```bash
+# parseJSONBody() will collect and parse the incoming JSON
+# santizeData() 
+# addNewSighting() will do the donkey work of adding the data to our dataset
+# sendResponse()
+
+# 1. 
+# Create and export a function called handlePost().
+# 2. 
+# For now, that function can just log 'POST request received'.
+```
+
+## parseJSON Body
+
+**Challenge:**
+
+```bash
+# 1. Create a function parseJSONBody which:
+#   - gathers the incoming chunks into a string 'body'.
+#   - parses 'body'
+#   - returns 'body'
+#   - throws an error if 'body' can't be parsed:
+#     - `Invalid JSON format: ${err}`
+```
+
+```bash
+# 1. Create a const 'rawBody' to store whatever is returned by parseJSONBody()
+# 2. For now, log 'rawBody'.
+# 3. Input an entry on the front end to test.
+```
+
+**Hint:**
+
+```js
+let body = []
+for await (const chunk of req) {
+  body.push(chunk)
+}
+
+try {
+  const emailObj = JSON.parse(body)
+  console.log(emailObj)
+  res.statusCode = 201
+  res.setHeader('Content-Type', 'application/json')
+  res.end(JSON.stringify(emailObj))
+}
+catch (err) {
+  console.log('Invalid JSON, ', err)
+}
+```
+
+## Handling POST Part 1
+
+**Challenge:**
+
+```bash
+# 1. Replace ??? with the correct status code!
+```
+
+**Hint:**
+```js
+// routeHandlers.js
+export async function handlePost(req, res) {
+  try {
+    const parsedBody = await parseJSONBody(req)
+    await addNewSighting(parsedBody)
+    sendResponse(res, ???, 'application/json', JSON.stringify(parsedBody))
+  } catch (err) {
+    sendResponse(res, ???, 'application/json', JSON.stringify({error: err}))
+  }
+}
+```
+
+**Challenge:**
+
+```bash
+# 1. Get the existing data (remember, this will already be a JS array)
+# 2. Push the new sighting to it (we parsed it to a JS object in the last scrim)
+# 3. Write data to the file.
+# 4. Add the new sighting and check out the 'read' page.
+# 5. Throw an error (in the catch block) if any of 1-3 above fail.
+
+# To write data:
+# Import fs/promises
+# Use the writeFile method with the following:
+#   - the relative path to the file 
+#   - The data (what should we do to this data first?)
+#   - The encoding 'utf8'
+
+# Bonus: figure out how to prettify the JSON!
+```
+
+**Hint:**
+```js
+const fs = require('fs').promises;
+try {
+  // Write text to a file
+  await fs.writeFile('myfile.txt', 'Hello, World!', 'utf8');
+
+  // Write JSON data
+  const data = { name: 'John', age: 30, city: 'New York' };
+  await fs.writeFile('data.json', JSON.stringify(data, null, 2), 'utf8');
+
+  console.log('Files created successfully');
+} catch (err) {
+  console.error('Error writing files:', err);
+}
+```
+
+## Aside: Sanitization
+
+**XSS - Crossing-Site Scripting:**
+
+An XSS attack is a security vulnerability that allows an attacker to inject malicious scripts into web pages.
+
+Sanitization is removing anything suspicious from incoming input. In this case, we will be removing any tags from user-uploaded text.
+
+**Hint:**
+```js
+import sanitizeHtml from 'sanitize-html'
+console.log(
+  sanitizeHtml('h1: <h1>I am in an h1 tag</h1>',  
+    {allowedTags: ['h1'], allowedAttributes: {}}
+  )
+)
+```
+
+## Sanitize Input
+
+**Challenge:**
+
+```bash
+# 1. Sanitize the incoming data. 
+#    Allow only the <b> tag and no attributes.
+# 2. Test it with the code in story.md.
+```
+
+**Hint:**
+
+```bash
+# Bring in the sanitize-html dependency
+# Set up a utility function to sanitize incoming data.
+# Our incoming data is an object.
+# Iterate over that object and sanitize any strings. Remember to allow the '<b>' tag.
+# One way to iterate over an object:
+#   for (const [key, value] of Object.entries(objName)) {
+#    // do something here
+#   }
+# Our function should return the sanitized data.
+# Probably best to call this function in handlePost()
+```
+
+```js
+const sanitizedData = {}
+for (const [key, value] of Object.entries(data)) {
+  if (typeof value === 'string') {
+    sanitizedData[key] = sanitizeHtml(value, {
+      allowedTags: ['b'],
+      allowedAttributes: {}
+    })
+  } else {
+    sanitizedData[key] = value
+  }
+}
+```
+
+## Add Event Emitter
+
+**Event-Driver Architecture**
+
+Events: 
+- An event signals that something happened:
+  - A user clicks a button
+  - A file finishes downloading
+  - A network request is received
+  - And many more
+
+**The Event Emitter from Node's events module**
+
+**Challenge:**
+
+```bash
+# 1. Create and export a new instance of EventEmitter called ‘sightingEvents’.
+# 2. Register the listener function when an event called ‘sighting-added’ is detected. 
+```
+
+**Challenge:**
+
+```bash
+# 1. At the top of this file, import the event emitter you have created.
+# 2. Use it to emit a ‘sighting-added’ event. 
+#    What information does the listener function need?
+# 3. Add a sighting to test!
+```
+
+**Hint:**
+
+```js
+// import EventEmitter
+import { EventEmitter } from 'node:events'
+
+const customerDetails = {
+  fullName: 'Meryl Sheep',
+  email: 'baah@thedevilwearswool.com',
+  phone: 12345678910
+}
+
+// create the emitter
+const emailRequestEmitter = new EventEmitter()
+
+// define the listener function
+function generateEmail(customer) {
+  console.log(`Email generated for ${customer.email}`)
+}
+
+// register the listener
+emailRequestEmitter.on('emailRequest', generateEmail)
+
+// emit the event
+setTimeout(()=> {
+  emailRequestEmitter.emit('emailRequest', customerDetails)
+}, 2000)
+```
+
+## Server-Sent Events
+
+**Provide a constant stream of data to a client:**
+- Breacking news
+- Stock price tickers
+- Sports scores
+- Real-time monitoring
+
+**Data flows only one way, so not suitable for:**
+- Chat apps
+- Doorbell cams
+- anything where two-way communitation is needed
+
+**Challenge:**
+
+```bash
+# 1. Set Content-Type, Cache-Control, and Connection headers
+```
+
+**Challenge:**
+
+```bash
+# 1. Use res.write() to send an object to the frontend. 
+#    The object should include:
+#    - an event property with a descriptive name.
+#    - a story chosen at random from the stories array.
+#    Remember, the object is contained in a string which starts with 'data: '. 
+#    What do you need at the end of the string to signal the end of a message block?
+```
+
+## Outro
+
+**We studied:**
+
+- The `fs` module
+  - reading/writing file
+- The `path` module
+  - create file/directory paths
+- Serving static assets
+- Dependencies
+- Sanitizing input
+
+**Stretch Goals:**
+
+- Error Handling 
+  - A client requests '/api/xyz'
+  - A client request '/api' but uses a method which is not 'GET' or 'POST'
+- Add 'uuids' to incoming data
+  - Use a dependency to generate the 'uuid'
