@@ -1,0 +1,21 @@
+{
+  "name": "build-a-routed-site",
+  "version": "1.0.0",
+  "description": "A site where users can share paranormal sightings.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obrnocsta/build-a-routed-site.git"
+  },
+  "keywords": [],
+  "author": "Bruno Costa",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/obrnocsta/build-a-routed-site/issues"
+  },
+  "homepage": "https://github.com/obrnocsta/build-a-routed-site#readme"
+}
