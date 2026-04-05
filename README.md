@@ -1,4 +1,4 @@
-# Construindo um Site com Roteamento (Build A Routed Site)
+# From The Other Side (Construindo um Site com Roteamento)
 
 Uma aplicação web full-stack construída com Node.js que permite aos usuários compartilhar e explorar avistamentos paranormais. A plataforma possui um backend com API REST e um frontend interativo com streaming de notícias em tempo real.
 
