@@ -1,201 +1,200 @@
-# Build A Routed Site
+# Construindo um Site com Roteamento (Build A Routed Site)
 
-A full-stack web application built with Node.js that allows users to share and explore paranormal sightings. The platform features a REST API backend and an interactive frontend with real-time news streaming.
+Uma aplicação web full-stack construída com Node.js que permite aos usuários compartilhar e explorar avistamentos paranormais. A plataforma possui um backend com API REST e um frontend interativo com streaming de notícias em tempo real.
 
-## 🚀 Getting Started
+## 🚀 Primeiros Passos
 
-### Installation
+### Instalação
 
 ```bash
 npm install
 ```
 
-### Running the Server
+### Executando o Servidor
 
 ```bash
 npm start
 ```
 
-The server runs on `http://localhost:8000`
+O servidor roda em `http://localhost:8000`
 
-## 📍 Project Structure
+## 📍 Estrutura do Projeto
 
 ```
 build-a-routed-site/
-├── server.js                      # Main server with HTTP routing
-├── package.json                   # Project metadata and dependencies
-├── public/                        # Frontend static files
-│   ├── index.html                # Home page - sightings gallery
-│   ├── index.js                  # Sightings page logic
-│   ├── index.css                 # Styling for all pages
-│   ├── sightings.html            # Sightings view page
-│   ├── upload-sighting.html      # Form to submit new sightings
-│   ├── upload-sighting.js        # Upload form handling
-│   ├── news.html                 # Real-time news feed page
-│   ├── news.js                   # News stream handling
-│   ├── 404.html                  # Error page
-│   └── images/                   # Image assets
+├── server.js                  # Servidor principal com roteamento HTTP
+├── package.json               # Metadados do projeto e dependências
+├── public/                    # Arquivos estáticos do frontend
+│   ├── index.html             # Página inicial - galeria de avistamentos
+│   ├── index.js               # Lógica da página de avistamentos
+│   ├── index.css              # Estilização para todas as páginas
+│   ├── sightings.html         # Página de visualização de avistamentos
+│   ├── upload-sighting.html   # Formulário para enviar novos avistamentos
+│   ├── upload-sighting.js     # Manipulação do formulário de upload
+│   ├── news.html              # Página de feed de notícias em tempo real
+│   ├── news.js                # Manipulação do stream de notícias
+│   ├── 404.html               # Página de erro
+│   └── images/                # Assets de imagem
 ├── data/
-│   ├── data.json                 # Sightings database
-│   └── stories.js                # Paranormal news stories data
+│   ├── data.json              # Banco de dados de avistamentos
+│   └── stories.js             # Dados de notícias paranormais
 ├── handlers/
-│   └── routeHandlers.js          # Request handlers for all API routes
+│   └── routeHandlers.js       # Manipuladores de requisição para rotas da API
 ├── utils/
-│   ├── serverStatic.js           # Static file serving
-│   ├── sendResponse.js           # HTTP response utility
-│   ├── getContentType.js         # MIME type determination
-│   ├── getData.js                # Read sightings from JSON
-│   ├── addData.js                # Write new sightings to JSON
-│   ├── getIncomingData.js        # Parse incoming request body
-│   ├── sanitizeData.js           # HTML sanitization for user input
-│   └── alert.js                  # Client-side alerts
+│   ├── serverStatic.js        # Serviço de arquivos estáticos
+│   ├── sendResponse.js        # Utilitário de resposta HTTP
+│   ├── getContentType.js      # Determinação de tipo MIME
+│   ├── getData.js             # Leitura de avistamentos do JSON
+│   ├── addData.js             # Escrita de novos avistamentos no JSON
+│   ├── getIncomingData.js     # Parsing do corpo da requisição
+│   ├── sanitizeData.js        # Sanitização de HTML para entrada do usuário
+│   └── alert.js               # Alertas do lado do cliente
 └── events/
-    └── events.js                 # Event emitter for sighting notifications
+    └── events.js              # Emissor de eventos para notificações
 ```
 
-## 🔗 API Endpoints
+## 🔗 Endpoints da API
 
-### Get All Sightings
+### Listar Todos os Avistamentos
 
 **GET** `/api`
 
-Returns all paranormal sightings stored in the database.
+Retorna todos os avistamentos paranormais armazenados no banco de dados.
 
-**Response Example:**
+**Exemplo de Resposta:**
 ```json
 [
   {
     "id": 1,
-    "title": "Strange lights in the sky",
+    "title": "Luzes estranhas no céu",
     "location": "Phoenix, Arizona",
     "timeStamp": "2026-03-23",
-    "text": "Witnessed unusual glowing orbs moving erratically...",
-    "description": "Detailed account of the sighting"
+    "text": "Vi globos luminosos incomuns se movendo erraticamente...",
+    "description": "Relato detalhado do avistamento"
   }
 ]
 ```
 
-### Submit a Sighting
+### Enviar um Avistamento
 
 **POST** `/api`
 
-Submit a new paranormal sighting to the database.
+Envia um novo avistamento paranormal para o banco de dados.
 
-**Request Body:**
+**Corpo da Requisição (Request Body):**
 ```json
 {
-  "title": "Mysterious Figure",
+  "title": "Figura Misteriosa",
   "location": "Salem, Massachusetts",
   "timeStamp": "2026-03-22",
-  "text": "Shadow figure appeared at midnight...",
-  "description": "Full description of the encounter"
+  "text": "Uma figura de sombra apareceu à meia-noite...",
+  "description": "Descrição completa do encontro"
 }
 ```
 
-**Response:** 
-Returns the newly created sighting object with HTTP 201 status.
+**Resposta:** Retorna o objeto do avistamento recém-criado com status HTTP 201.
 
-### Real-time News Stream
+### Stream de Notícias em Tempo Real
 
 **GET** `/api/news`
 
-Server-Sent Events (SSE) stream that delivers paranormal news updates every 3 seconds.
+Stream de Server-Sent Events (SSE) que entrega atualizações de notícias paranormais a cada 3 segundos.
 
-**Response:** Text event stream format
+**Resposta:** Formato de stream de evento de texto
 ```
 data: {"event":"news-update","story":"..."}
 ```
 
-## 🎨 Frontend Features
+## 🎨 Recursos do Frontend
 
-- **Sightings Gallery** - Browse all submitted paranormal sightings with expandable details
-- **Submit Sightings** - Contribute your own paranormal experiences through a secure form
-- **Real-time News** - Stream of paranormal news stories updated in real-time
-- **Responsive Design** - Mobile-friendly interface with modern CSS
-- **Accessibility** - ARIA labels and semantic HTML for screen readers
+- **Galeria de Avistamentos** - Navegue por todos os relatos enviados com detalhes expansíveis.
+- **Envio de Avistamentos** - Contribua com suas próprias experiências paranormais através de um formulário seguro.
+- **Notícias em Tempo Real** - Feed de notícias paranormais atualizado em tempo real.
+- **Design Responsivo** - Interface adaptada para dispositivos móveis com CSS moderno.
+- **Acessibilidade** - Rótulos ARIA e HTML semântico para leitores de tela.
 
-## 🔒 Security Features
+## 🔒 Recursos de Segurança
 
-- **HTML Sanitization** - All user input is sanitized using `sanitize-html` to prevent XSS attacks
-- **Input Validation** - Server-side validation of incoming sightings data
-- **Error Handling** - Graceful error responses for invalid requests
+- **Sanitização de HTML** - Toda entrada do usuário é limpa usando `sanitize-html` para prevenir ataques XSS.
+- **Validação de Entrada** - Validação no lado do servidor para os dados recebidos.
+- **Tratamento de Erros** - Respostas de erro amigáveis para requisições inválidas.
 
-## 🛠️ Core Technologies
+## 🛠️ Tecnologias Core
 
-- **Node.js** - JavaScript runtime for the server
-- **Native HTTP Module** - `node:http` for handling requests
-- **ES Modules** - Modern JavaScript module system
-- **File System API** - `node:fs` for persistent data storage
-- **EventEmitter** - Event-driven architecture for real-time updates
-- **Server-Sent Events (SSE)** - Real-time streaming to clients
+- **Node.js** - Ambiente de execução JavaScript no servidor.
+- **Módulo HTTP Nativo** - `node:http` para lidar com requisições.
+- **ES Modules** - Sistema de módulos moderno do JavaScript.
+- **File System API** - `node:fs` para armazenamento persistente de dados.
+- **EventEmitter** - Arquitetura orientada a eventos para atualizações em tempo real.
+- **Server-Sent Events (SSE)** - Streaming em tempo real para os clientes.
 
-## 📦 Dependencies
+## 📦 Dependências
 
-- **sanitize-html** ^2.17.2 - Sanitize HTML input to prevent XSS vulnerabilities
+- **sanitize-html** ^2.17.2 - Sanitiza entradas HTML para prevenir vulnerabilidades XSS.
 
-## 📝 How It Works
+## 📝 Como Funciona
 
-### Backend Flow
+### Fluxo do Backend
 
-1. **Request Routing** - `server.js` routes incoming requests to appropriate handlers
-2. **Data Retrieval** - `GET /api` fetches sightings from `data/data.json`
-3. **Data Submission** - `POST /api` accepts new sightings, sanitizes input, and persists to JSON
-4. **Event Publishing** - New submissions trigger `sighting-added` events for real-time updates
-5. **News Streaming** - `GET /api/news` establishes SSE connection and pushes story updates
+1. **Roteamento de Requisição** - O `server.js` direciona as requisições para os manipuladores (handlers) apropriados.
+2. **Recuperação de Dados** - `GET /api` busca os avistamentos em `data/data.json`.
+3. **Envio de Dados** - `POST /api` aceita novos relatos, sanitiza a entrada e persiste no JSON.
+4. **Publicação de Eventos** - Novos envios disparam eventos `sighting-added` para atualizações em tempo real.
+5. **Streaming de Notícias** - `GET /api/news` estabelece uma conexão SSE e envia atualizações de histórias.
 
-### Frontend Flow
+### Fluxo do Frontend
 
-1. **Load Sightings** - On page load, fetch all sightings from `/api`
-2. **Render Cards** - Display sightings as expandable cards with timestamp and location
-3. **User Interaction** - Toggle card expansion to read full sighting details
-4. **Submit Form** - Post new sightings to `/api` with form validation
-5. **News Feed** - Connect to `/api/news` SSE stream for real-time updates
+1. **Carregar Avistamentos** - Ao carregar a página, busca todos os avistamentos em `/api`.
+2. **Renderizar Cards** - Exibe os avistamentos como cards expansíveis com data e localização.
+3. **Interação do Usuário** - Alterna a expansão dos cards para ler os detalhes completos.
+4. **Enviar Formulário** - Envia novos avistamentos para `/api` com validação de formulário.
+5. **Feed de Notícias** - Conecta ao stream SSE de `/api/news` para atualizações em tempo real.
 
-## 📚 Key Concepts Learned
+## 📚 Principais Conceitos Aprendidos
 
-- **HTTP Server Creation** - Building a full HTTP server from Node's native module
-- **Request Routing** - Dynamic URL-based request handling
-- **HTTP Methods** - Handling GET and POST requests appropriately
-- **Response Status Codes** - Using 200, 201, 404, 500 codes correctly
-- **Headers** - Setting Content-Type and streaming headers
-- **Static File Serving** - Serving HTML, CSS, and JavaScript files
-- **Data Persistence** - Reading and writing JSON files
-- **Input Sanitization** - Protecting against XSS attacks
-- **Server-Sent Events** - Real-time streaming communication
-- **Event-Driven Architecture** - Using EventEmitter for loose coupling
+- **Criação de Servidor HTTP** - Construção de um servidor completo usando o módulo nativo do Node.
+- **Roteamento de Requisições** - Manipulação dinâmica de requisições baseada em URL.
+- **Métodos HTTP** - Lidando com requisições GET e POST adequadamente.
+- **Códigos de Status de Resposta** - Uso correto dos códigos 200, 201, 404, 500.
+- **Headers (Cabeçalhos)** - Configuração de Content-Type e headers de streaming.
+- **Serviço de Arquivos Estáticos** - Entrega de arquivos HTML, CSS e JavaScript.
+- **Persistência de Dados** - Leitura e escrita em arquivos JSON.
+- **Sanitização de Entrada** - Proteção contra ataques XSS.
+- **Server-Sent Events** - Comunicação de streaming em tempo real.
+- **Arquitetura Orientada a Eventos** - Uso de EventEmitter para baixo acoplamento.
 
-## 🎯 Stretch Goals
+## 🎯 Objetivos (Stretch Goals)
 
-- [x] API endpoint for retrieving sightings
-- [x] Form submission for new sightings
-- [x] Input sanitization and validation
-- [x] Real-time news streaming with SSE
-- [x] Responsive frontend design
-- [ ] User authentication system
-- [ ] Image uploads for sightings
-- [ ] Advanced filtering (by location, date range, etc.)
-- [ ] Database migration (from JSON to MongoDB/PostgreSQL)
-- [ ] Pagination for large datasets
-- [ ] Comment/discussion system
+- [x] Endpoint de API para recuperar avistamentos
+- [x] Envio de formulário para novos avistamentos
+- [x] Sanitização e validação de entrada
+- [x] Streaming de notícias em tempo real com SSE
+- [x] Design de frontend responsivo
+- [ ] Sistema de autenticação de usuários
+- [ ] Upload de imagens para os avistamentos
+- [ ] Filtragem avançada (por localização, intervalo de datas, etc.)
+- [ ] Migração de banco de dados (de JSON para MongoDB/PostgreSQL)
+- [ ] Paginação para grandes conjuntos de dados
+- [ ] Sistema de comentários/discussão
 
-## 🌍 Pages Overview
+## 🌍 Visão Geral das Páginas
 
-| Page | Purpose |
+| Página | Propósito |
 |------|---------|
-| `/` | Home - displays sightings gallery with expandable cards |
-| `/sightings.html` | Dedicated sightings view page |
-| `/upload-sighting.html` | Form to submit new paranormal sightings |
-| `/news.html` | Real-time paranormal news stream |
+| `/` | Home - exibe a galeria de avistamentos com cards expansíveis |
+| `/sightings.html` | Página dedicada para visualização de avistamentos |
+| `/upload-sighting.html` | Formulário para enviar novos avistamentos paranormais |
+| `/news.html` | Stream de notícias paranormais em tempo real |
 
-## 💡 Technologies
+## 💡 Tecnologias
 
-- **Node.js** - Server-side JavaScript runtime
-- **HTTP Module** - Node's native HTTP server
-- **Vanilla JavaScript** - Frontend logic without frameworks
-- **CSS3** - Modern styling and responsive layouts
-- **HTML5** - Semantic markup with accessibility features
-- **ES Modules** - Native JavaScript modules
+- **Node.js** - Runtime JavaScript server-side
+- **Módulo HTTP** - Servidor HTTP nativo do Node
+- **Vanilla JavaScript** - Lógica de frontend sem frameworks
+- **CSS3** - Estilização moderna e layouts responsivos
+- **HTML5** - Marcação semântica com recursos de acessibilidade
+- **ES Modules** - Módulos nativos do JavaScript
 
 ---
 
-Made with ❤️ for those interested in the paranormal
+Feito com ❤️ para os interessados no paranormal
